@@ -17,10 +17,10 @@ contract ROYALTY is ERC721A, Ownable, ReentrancyGuard {
   uint256 public  maxSupply = 1200;
   uint256 public  MAX_PUBLIC_MINT = 10;
   uint256 public  MAX_WHITELIST_MINT = 10;
-  uint256 public  PUBLIC_SALE_PRICE = 0.001 ether;
+  uint256 public  PUBLIC_SALE_PRICE = 1 ether;
   uint256 public  WHITELIST_SALE_PRICE = 0.00001 ether;
   address public artist;
-  uint256 royaltyFee = 10;
+  uint256 royaltyFee = 5;
 
 
   bool public paused = false;
@@ -59,11 +59,6 @@ contract ROYALTY is ERC721A, Ownable, ReentrancyGuard {
         if (msg.value > 0) {
 			uint256 royalty = (msg.value * royaltyFee) / 100;
 			_payRoyalty(royalty);
-
-			(bool success2, ) = payable(owner()).call{
-				value: msg.value - royalty
-			}("");
-			require(success2);
 		}
 
       _safeMint(_msgSender(), tokens);
